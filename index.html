@@ -39,7 +39,10 @@
 
         .logo {
             width: 150px;
-            filter: drop-shadow(0 0 10px var(--primary-blue));
+            height: 150px; /* Forzar cuadrado para el círculo */
+            border-radius: 50%; /* Hacerlo redondo */
+            object-fit: cover; /* Asegurar que la imagen no se deforme */
+            filter: drop-shadow(0 0 15px var(--primary-blue)); /* Efecto iluminación */
         }
 
         h1 {
@@ -131,7 +134,7 @@
 
     <div class="container">
         <header>
-            <img src="https://github.com/Loberia-Tactical-Group/.github/blob/main/profile/loberia_logo.png?raw=true" alt="Loberia Logo" class="logo">
+            <img src="https://loberia-tactical-group.github.io/hardening-as-code/assets/logo_300.png" alt="Loberia Logo" class="logo">
             <h1>Loberia Tactical</h1>
             <div class="status-bar">SYSTEM STATUS: OPERATIONAL</div>
             <p class="terminal-text">> Initializing secure connection... OK</p>
@@ -159,7 +162,7 @@
 
         <footer>
             DEFENDING THE DIGITAL PERIMETER SINCE 2026<br>
-            A DIVISION OF EXTREME CUCINE & LOBERIA TACTICAL
+            A DIVISION OF LOBERIA TACTICAL GROUP.
         </footer>
     </div>
 
