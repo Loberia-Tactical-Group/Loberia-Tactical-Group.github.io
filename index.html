@@ -3,168 +3,361 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loberia Tactical Group | Operations Center</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>Loberia Tactical Group | System Operational</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0a0a0a;
-            --primary-blue: #00d4ff;
-            --text-gray: #a0a0a0;
-            --border-color: #1a1a1a;
+            --bg-dark: #080b09;
+            --bg-card: #0f1511;
+            --border-color: #1a271e;
+            --green-primary: #00ff66;
+            --text-main: #e0e6e2;
+            --text-muted: #7a8c80;
+            --font-mono: 'JetBrains Mono', 'Share Tech Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: white;
-            font-family: 'JetBrains+Mono', monospace;
-            margin: 0;
-            padding: 0;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-mono);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-        }
-
-        .container {
-            max-width: 900px;
-            width: 90%;
-            padding: 50px 20px;
-        }
-
-        header {
-            text-align: center;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 30px;
-            margin-bottom: 40px;
-        }
-
-        .logo {
-            width: 150px;
-            height: 150px; /* Forzar cuadrado para el círculo */
-            border-radius: 50%; /* Hacerlo redondo */
-            object-fit: cover; /* Asegurar que la imagen no se deforme */
-            filter: drop-shadow(0 0 15px var(--primary-blue)); /* Efecto iluminación */
-        }
-
-        h1 {
-            font-size: 1.8rem;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            margin-top: 20px;
-        }
-
-        .status-bar {
-            display: inline-block;
-            padding: 5px 15px;
-            border: 1px solid var(--primary-blue);
-            color: var(--primary-blue);
-            font-size: 0.8rem;
-            margin-bottom: 10px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: #111;
-            border: 1px solid var(--border-color);
-            padding: 25px;
-            transition: 0.3s;
+            overflow-x: hidden;
             position: relative;
-            overflow: hidden;
         }
 
-        .card:hover {
-            border-color: var(--primary-blue);
-            background: #151515;
-            transform: translateY(-5px);
+        /* Tactical Grid Background */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(to right, rgba(0, 255, 102, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 255, 102, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            pointer-events: none;
+            z-index: -1;
         }
 
-        .card h2 {
-            color: var(--primary-blue);
-            margin-top: 0;
-            font-size: 1.2rem;
+        /* Scanline Overlay */
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: rgba(0, 255, 102, 0.2);
+            box-shadow: 0 0 10px var(--green-primary);
+            animation: scan 8s linear infinite;
+            z-index: 10;
+            pointer-events: none;
         }
 
-        .card p {
-            color: var(--text-gray);
-            font-size: 0.9rem;
-            line-height: 1.6;
+        @keyframes scan {
+            0% { top: 0%; }
+            100% { top: 100%; }
         }
 
-        .btn {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 20px;
-            background: transparent;
-            color: var(--primary-blue);
-            border: 1px solid var(--primary-blue);
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.8rem;
+        /* HEADER */
+        header {
+            width: 100%;
+            border-bottom: 1px solid rgba(0, 255, 102, 0.1);
+            background: rgba(8, 11, 9, 0.8);
+            backdrop-filter: blur(5px);
+            position: sticky;
+            top: 0;
+            z-index: 5;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+        }
+
+        .brand img {
+            height: 45px;
+            filter: drop-shadow(0 0 8px rgba(0, 255, 102, 0.3));
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid var(--green-primary);
+            padding: 6px 12px;
+            font-size: 0.75rem;
+            color: var(--green-primary);
+            letter-spacing: 1.5px;
+            background: rgba(0, 255, 102, 0.05);
             text-transform: uppercase;
-            transition: 0.3s;
+            font-weight: 700;
         }
 
-        .btn:hover {
-            background: var(--primary-blue);
-            color: black;
-            box-shadow: 0 0 15px var(--primary-blue);
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--green-primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--green-primary);
+            animation: pulse 1.5s infinite alternate;
         }
 
-        footer {
-            margin-top: 60px;
+        @keyframes pulse {
+            from { opacity: 0.4; }
+            to { opacity: 1; }
+        }
+
+        /* HERO SECTION */
+        .hero {
             text-align: center;
-            color: #444;
-            font-size: 0.7rem;
+            padding: 80px 20px 60px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            color: #ffffff;
+            margin-bottom: 20px;
+            text-transform: uppercase;
             letter-spacing: 2px;
-            padding-bottom: 40px;
+        }
+
+        .hero h1 span {
+            color: var(--green-primary);
+        }
+
+        .terminal-container {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--border-color);
+            display: inline-block;
+            padding: 15px 25px;
+            margin-bottom: 50px;
+            border-radius: 4px;
         }
 
         .terminal-text {
-            color: #0f0;
+            color: var(--green-primary);
+            font-size: 1.1rem;
+            display: inline-block;
+            border-right: 2px solid var(--green-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 2.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--green-primary); }
+        }
+
+        /* MAIN MODULES (GRID) */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 80px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .module-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .module-card::before {
+            content: "";
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            height: 3px;
+            background: var(--green-primary);
+            opacity: 0.3;
+            transition: opacity 0.3s ease;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 102, 0.08);
+            border-color: rgba(0, 255, 102, 0.3);
+            background: rgba(15, 21, 17, 0.9);
+        }
+
+        .module-card:hover::before {
+            opacity: 1;
+            box-shadow: 0 0 10px var(--green-primary);
+        }
+
+        .module-icon {
+            color: var(--green-primary);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .module-card h2 {
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .module-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            flex-grow: 1;
+        }
+
+        .btn-tactical {
+            display: block;
+            text-align: center;
+            background: rgba(0, 255, 102, 0.05);
+            color: var(--green-primary);
+            border: 1px solid var(--green-primary);
+            text-decoration: none;
+            padding: 12px 24px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-tactical:hover {
+            background: var(--green-primary);
+            color: #000;
+            box-shadow: 0 0 15px rgba(0, 255, 102, 0.4);
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: auto;
+            border-top: 1px solid rgba(0, 255, 102, 0.1);
+            background: #050806;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
             font-size: 0.8rem;
-            margin-bottom: 20px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            letter-spacing: 1px;
+        }
+
+        .footer-highlight {
+            color: var(--green-primary);
+            font-weight: 700;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .hero {
+                padding: 50px 20px 40px;
+            }
+            .terminal-text {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <img src="https://loberia-tactical-group.github.io/hardening-as-code/assets/logo_300.png" alt="Loberia Logo" class="logo">
-            <h1>Loberia Tactical</h1>
-            <div class="status-bar">SYSTEM STATUS: OPERATIONAL</div>
-            <p class="terminal-text">> Initializing secure connection... OK</p>
-        </header>
+    <div class="scanline"></div>
 
-        <main class="grid">
-            <div class="card">
-                <h2>Loberia Shield XDR</h2>
-                <p>Prestige Edition v2.2. Endpoint protection with real-time monitoring and persistence engine. Specifically designed for optimized OS.</p>
-                <a href="https://github.com/Loberia-Tactical-Group/Loberia-Shield/releases/tag/v2.2" class="btn">Download Setup</a>
+    <!-- HEADER -->
+    <header>
+        <div class="header-content">
+            <div class="brand">
+                <img alt="Loberia Logo" src="https://loberia-tactical-group.github.io/hardening-as-code/assets/logo_300.png">
             </div>
-
-            <div class="card">
-                <h2>Hardening-as-Code</h2>
-                <p>Automated security baselines and optimization scripts to harden Windows and Linux environments against modern threats.</p>
-                <a href="https://github.com/Loberia-Tactical-Group/hardening-as-code" class="btn">Access Repository</a>
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                <span>SYSTEM STATUS: OPERATIONAL</span>
             </div>
+        </div>
+    </header>
 
-            <div class="card">
-                <h2>Community Hub</h2>
-                <p>Integrated Discord units for Fitness Community. Automated intelligence and training routines via Milos AI Bot.</p>
-                <a href="https://discord.gg/JctyrXrrd8" class="btn">Join Discord</a>
-            </div>
-        </main>
+    <!-- HERO INTRO -->
+    <section class="hero">
+        <h1>LOBERIA <span>TACTICAL</span></h1>
+        <div class="terminal-container">
+            <div class="terminal-text">&gt; Initializing secure connection... OK</div>
+        </div>
+    </section>
 
-        <footer>
+    <!-- MODULES / CARDS -->
+    <main>
+        <!-- Card 1 -->
+        <article class="module-card">
+            <div class="module-icon">[ XDR ]</div>
+            <h2>Loberia Shield XDR</h2>
+            <p>Prestige Edition v2.2. Endpoint protection with real-time monitoring and persistence engine. Specifically designed for optimized OS.</p>
+            <a href="https://github.com/Loberia-Tactical-Group/Loberia-Shield/releases/tag/v2.2" class="btn-tactical">Download Setup &rarr;</a>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="module-card">
+            <div class="module-icon">[ H-A-C ]</div>
+            <h2>Hardening-as-Code</h2>
+            <p>Automated security baselines and optimization scripts to harden Windows and Linux environments against modern threats.</p>
+            <a href="https://github.com/Loberia-Tactical-Group/hardening-as-code" class="btn-tactical">Access Repository &rarr;</a>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="module-card">
+            <div class="module-icon">[ HUB ]</div>
+            <h2>Community Hub</h2>
+            <p>Integrated Discord units for Fitness Community. Automated intelligence and training routines via Milos AI Bot.</p>
+            <a href="https://discord.gg/JctyrXrrd8" class="btn-tactical">Join Discord &rarr;</a>
+        </article>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
             DEFENDING THE DIGITAL PERIMETER SINCE 2026<br>
-            A DIVISION OF LOBERIA TACTICAL GROUP.
-        </footer>
-    </div>
+            A DIVISION OF <span class="footer-highlight">LOBERIA TACTICAL GROUP</span>.
+        </div>
+    </footer>
 
 </body>
 </html>
